@@ -107,7 +107,42 @@ public class App3{
 
                     }while(!valid);
 
+                    System.out.print("Enter the Intial Deposit: ");
+                    intialDeposit = scanner.nextInt();
+                    scanner.nextLine();
 
+                    if (intialDeposit < 5000){
+                        System.out.printf(ERROR_MSG,"Insufficient Amount. Please Deposit Above Rs.5000!");
+                        System.out.print(CONTINUE_MSG);
+                        if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
+                        screen = DASHBOARD;
+                    }else{
+                        System.out.printf("%s : %s has been created an account successfully. \n",accountNum,name );
+                    }
+
+                    String[] newAcNum = new String[acNumArray.length+1];
+                    String[] newNames = new String[acNumArray.length+1];
+                    String[] newBankBal = new String[acNumArray.length+1];
+                
+                    for (int i = 0; i < acNumArray.length; i++) {
+                        newAcNum[i] = acNumArray[i];
+                        newNames[i] = acNamesArray[i];
+                        newBankBal[i] = bankBalance[i];
+
+                    }
+
+                    newAcNum[newAcNum.length -1] = accountNum;
+                    newNames[newNames.length -1] = name;
+                    newBankBal[newBankBal.length-1] = String.valueOf(intialDeposit);
+                    acNumArray = newAcNum;
+                    acNamesArray = newNames;
+                    bankBalance = newBankBal;
+
+
+                    System.out.print(CONTINUE_MSG);
+                    if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue mainloop;
+                    screen = DASHBOARD;
+                    break;
 
                 default:
                     System.exit(0);
