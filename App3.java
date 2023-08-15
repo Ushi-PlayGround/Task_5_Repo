@@ -23,20 +23,32 @@ public class App3{
 
         final String ERROR_MSG = String.format("\t%s%s%s\n", COLOR_RED_BOLD, "%s", RESET);
         final String SUCCESS_MSG = String.format("\t%s%s%s\n", COLOR_GREEN_BOLD, "%s", RESET);
+        final String CONTINUE_MSG = String.format("%s%s%s",COLOR_BLUE_BOLD,"Do you want to create another account (Y/n)? ",RESET);
 
         String screen = DASHBOARD;
+
+        String accountNum;
+        String name;
+        int intialDeposit;
+
+        String[] acNumArray = new String[0];
+        String[] acNamesArray = new String[0];
+        String[] bankBalance = new String[0];
+
 
         mainloop:
         do{
             final String APP_TITLE = String.format("%s%s%s",COLOR_BLUE_BOLD, screen, RESET);
 
+            
             System.out.println(CLEAR);
             System.out.println("\t" + APP_TITLE + "\n");
 
+            
             switch(screen){
-
                 case DASHBOARD:
 
+                    
                     System.out.println("\t[1]. Create New Account ");
                     System.out.println("\t[2]. Deposits ");
                     System.out.println("\t[3]. Withdrawals");
@@ -44,6 +56,8 @@ public class App3{
                     System.out.println("\t[5]. Check A/C Balance");
                     System.out.println("\t[6]. Delete Account");
                     System.out.println("\t[7]. Exit");
+
+                    System.out.println();
         
                     System.out.print("\tEnter an Option: ");
                     int option = scanner.nextInt();
@@ -62,16 +76,46 @@ public class App3{
                     }
                     break;
 
+                case CREATE_NEW_ACCOUNT:
 
+                    accountNum = String.format("SDB-%05d",(acNumArray.length+1));
+                    System.out.printf("Account Number: %s \n",accountNum);
+
+                    boolean valid;
+                    loop1:
+                    do{
+                        valid = true;
+
+                        System.out.print("Enter Name: ");
+                        name = scanner.nextLine().strip();
+                
+                        if (name.isBlank()){
+                            System.out.printf(ERROR_MSG, "Customer name can't be empty");
+                            valid = false;
+                            continue;
+                        }
+                        for (int i = 0; i < name.length(); i++) {
+                            if (name.contains(" ")){
+                                continue;
+                            }
+                            if (!(Character.isLetter(name.charAt(i)))) {
+                                System.out.printf(ERROR_MSG,"Invalid Input");
+                                valid = false;
+                                break;
+                            }    
+                        }
+
+                    }while(!valid);
+
+
+
+                default:
+                    System.exit(0);
                     
             }
-
-                
-
-
-
 
         }while (true);
 
     }
+
 }
